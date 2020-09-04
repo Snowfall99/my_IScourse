@@ -2,7 +2,7 @@ import psycopg2
 import datetime
 #import getpass
 
-conn = psycopg2.connect(database="cinema", user="postgres", password="czx", host="127.0.0.1", port="5432")
+conn = psycopg2.connect(database="cinema", user="user", password="password", host="127.0.0.1", port="5432")
 cursor = conn.cursor()
 
 
