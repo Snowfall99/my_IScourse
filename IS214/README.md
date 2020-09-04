@@ -1,6 +1,6 @@
-## 数据库原理大作业
+## IS214-数据库原理
 A navie cinema database based on postgesql.  
-**Function list:**  
+**Function list:**
 - [x] client-server登录
 - [x] 注册
 - [x] 登录
