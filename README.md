@@ -6,4 +6,4 @@ Some notes and projects for SJTU IS courses.
 - [IS214-数据库原理(2020 Spring)](https://github.com/czx99/my_IScourse/tree/master/IS214)  
 - [IS226-计算机组成与系统结构(2020 Spring)](https://github.com/czx99/my_IScourse/tree/master/IS226)
 - [SE407-软件工程(2020 Spring)](https://github.com/czx99/my_IScourse/tree/master/SE407)
-- [IS205-信息论与编码(2020 fall Shuo Shao)](https://github.com/czx99/my_IScourse/tree/IS205)
+- [IS205-信息论与编码(2020 Fall)](https://github.com/czx99/my_IScourse/tree/IS205)
