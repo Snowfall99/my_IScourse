@@ -28,6 +28,13 @@
     所以我们可以得到
     \[H(x)\le\log_2|X|\]
     \subsection{相对熵}
+    p相对于q的相对熵定义为
+    \[D(p||q)=\sum_ip_i\log_2\frac{p_i}{q_i}\]
+    相对熵也成为交叉熵或Kullback-Leibler距离(KL距离)。它满足两个要求：
+    \begin{enumerate}
+        \item 非负性
+        \item 当且仅当对所有i,$p_i=q_i$时，相对熵为零
+    \end{enumerate}
     \subsubsection{证明$D(p||q)\ge0$}
     \paragraph{下凸函数的性质} $pf(x_1)+(i-p)f(x_2)\ge f(px_1+(1-p)x_2)$
     \paragraph{Jensen's Inequality:} 对于下凸函数而言，
@@ -35,8 +42,9 @@
     上凸函数反之。
     \begin{enumerate}
         \item $|X|=2$时，由下凸函数性质可证
-        \item 数学归纳法
+        \item Jensen's Inequality
     \end{enumerate}
+    下面先证Jensen's Inequality：\\
     Assume $|X|=k-1$, Jensen's Inequality holds\\
     Prove $|X|=k$, Inequality holds as well.\\
     Assume $\sum_{i=1}^{k-1}p(x_i)=q=1-p(x_k)$
@@ -47,4 +55,82 @@
         &\ge f(p(x_k)x_k+\sum_{i=1}^{k-1}p(x_i)x_i)\\
         &=f(EX)
     \end{align}
+    下面证$D(p||q)\ge0$\\
+    \begin{align}
+        -D(p||q)&=-\sum_{x\in A}p(x)\log_2\frac{p(x)}{q(x)}\\
+        &=\sum_{x\in A}p(x)\log_2\frac{q(x)}{p(x)}\\
+        &\le \log_2\sum_{x\in A}p(x)\frac{q(x)}{p(x)}\\
+        &=\log_2\sum_{x\in A}q(x)\\
+        &\le \log_2\sum_{x\in Z}q(x)\\
+        &=\log_21\\
+        &=0
+    \end{align}
+    \subsection{联合熵、条件熵}
+    \paragraph{条件熵} 
+    \begin{align}
+        H(X|Y)&=\sum_jp(y_j)H(X|y_j)\\
+        &=\sum_{ij}p(y_j)p(x_i|y_j)I(x_i|y_j)\\
+        &=\sum_{ij}p(x_i,y_j)\log_2p(x_i|y_j)
+    \end{align}
+    \paragraph{联合熵}
+    \[H(X,Y)=\sum_{ij}p(x_i,y_j)I(x_i,y_j)=-\sum p(x_i,y_j)\log_2p(x_i,y_j)\]
+    \[H(X|Y)=\sum p(y)H(X|y)\]
+    \subsubsection{证明$H(X|Y)=H(X,Y)-H(Y)$}
+    \begin{align}
+        H(X|Y)&=\sum p(x,y)\log_2\frac{1}{p(x|y)}\\
+        H(X,Y)-H(Y)&=\sum p(x,y)\log_2\frac{1}{p(x,y)}-\sum p(y)\log_2\frac{1}{p(y)}\\
+        &=\sum p(y)\sum p(x|y)\log_2\frac{1}{p(x,y)}-\sum p(y)\log_2\frac{1}{p(y)}\\
+        &=\sum p(y)(\sum p(x|y)\log_2\frac{1}{p(x,y)}-\log_2\frac{1}{p(y)})\\
+        &=\sum p(y)(\sum p(x|y)\log_2\frac{1}{p(x,y)}-\sum p(x|y)\log_2\frac{1}{p(y)})\\
+        &=\sum p(y)\sum p(x|y)\log_2\frac{p(y)}{p(x,y)}\\
+        &=\sum p(y)\sum p(x|y)\log_2\frac{1}{p(x|y)}\\
+        &=\sum p(x,y)\log_2\frac{1}{p(x|y)}\\
+        &=H(X|Y)
+    \end{align}
+    \subsection{互信息}
+    \begin{align}
+        I(X;Y)&=\sum_{i,j}p(x_i,y_j)\log_2\frac{p(x_i|y_j)}{p(x_i)}\\
+        &=\sum_{i,j}p(x_i,y_j)\log_2\frac{p(x_i,y_j)}{p(x_i)p(y_j)}\\
+        &=\sum_{i,j}p(x_i,y_j)\log_2\frac{p(y_j|x_i)}{p(y_j)}\\
+        &=I(Y;X)
+    \end{align}
+    \paragraph{互信息的一些性质：}
+    \begin{enumerate}
+        \item X || Y 时，$I(X;Y)=0$
+        \item X = Y 时， $I(X;Y)=H(X)=H(Y)$
+        \item X = f(Y) 时， $I(X;Y)=H(X)$
+    \end{enumerate}
+    \paragraph{互信息有如下表达形式：}
+    \begin{align}
+        I(X;Y)&=H(X)+H(Y)-H(X,Y)\\
+        &=H(X)-H(X|Y)\\
+        &=H(Y)-H(Y|X)
+    \end{align}
+    \paragraph{证明$I(X;Y)=H(X)+H(Y)-H(X,Y)$\\}
+    有如下公式成立：
+    \[p(x_i)=\sum_{y\in Y}p(x,y)\]
+    \begin{align}
+        I(X;Y)&=H(X)+H(Y)-H(X,Y)\\
+        &=\sum p(x)\log_2\frac{1}{p(x)}+\sum p(y)\log_2\frac{1}{p(y)}-\sum p(x,y)\log_2\frac{1}{p(x,y)}\\
+        &=\sum p(x,y)\log_2\frac{1}{p(x)}+\sum p(x,y)\log_2\frac{1}{p(y)}-\sum p(x,y)\log_2\frac{1}{p(x,y)}\\
+        &=\sum p(x,y)\log_2\frac{p(x,y)}{p(x)p(y)}
+    \end{align}
+    \paragraph{证明$I(X;Y)=H(X)-H(X|Y)$\\}
+    \begin{align}
+        I(X;Y)&=H(X)-H(X|Y)\\
+        &=\sum p(x)\log_2\frac{1}{p(x)}-\sum p(x,y)\log_2\frac{1}{p(x|y)}\\
+        &=\sum p(x,y)\log_2\frac{p(x|y)}{p(x)}
+    \end{align}
+    \subsection{Chain Rule}
+    二元的情况下有$H(X,Y)=H(X|Y)+H(Y)$\\
+
+    对于三元的情况$H(X_1,X_2,X_3)$，设$(X_2,X_3)=Z$，则有
+    \begin{align}
+        H(X_1,X_2,X_3)&=H(X_1,Z)\\
+        &=H(X_1|Z)+H(Z)\\
+        &=H(X_1|X_2,X_3)+H(X_2|H_3)+H(X_3)
+    \end{align}
+
+    推广到n元的情况下，得到$H(X_1,...,X_n)=\sum_{i=1}^nH(X_i|X_{i+1},...,X_n)$
+    \subsection{Conditional Matual Information}
 \end{document}
