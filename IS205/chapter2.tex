@@ -1,0 +1,50 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\title{Chapter 2}
+\author{Xuan}
+\begin{document}
+    \maketitle
+    \section{离散信源熵与互信息}
+    \subsection{信源熵}
+    $H(X)=\sum_ip(x_i)\log_2\frac{1}{p(x_i)}=-\sum_ip(x_i)\log_2p(x_i)$
+    \paragraph{性质：}
+    \begin{enumerate}
+        \item $H(X)\ge0$
+        \item $H(X)\le\log_2|X|$
+    \end{enumerate}
+    当某一符号$x_i$的概率为$p_i$为零时，$p_i\log_2p_i$在熵公式中无意义，为此规定这时的$p_i\log_2p_i$为零。
+    当信源$X$中只含一个符号$x$时，必定有$p(x)=1$，此时信源熵$H(x)$为零，是确定信源。
+    \subsubsection{证明$H(x)\le\log_2|X|$:}
+    \paragraph{方法一：} 求偏导，略
+    \paragraph{方法二：} 利用相对熵\\
+    假设q服从均匀分布，即$q_i=\frac{1}{|X|}$
+    \begin{align}
+        D(p||q)&=\sum_ip_i\log_2\frac{p_i}{q_i}\\
+        &=\sum_ip_i\log_2p_i-\sum_ip_i\log_2q_i\\
+        &=-H(x)-\sum_ip_i\log_2q_i\ge0\\
+        &=-H(x)+\sum_ip_i\log_2|X|\ge0
+    \end{align}
+    所以我们可以得到
+    \[H(x)\le\log_2|X|\]
+    \subsection{相对熵}
+    \subsubsection{证明$D(p||q)\ge0$}
+    \paragraph{下凸函数的性质} $pf(x_1)+(i-p)f(x_2)\ge f(px_1+(1-p)x_2)$
+    \paragraph{Jensen's Inequality:} 对于下凸函数而言，
+    \[Ef(X)\ge f(EX)\]
+    上凸函数反之。
+    \begin{enumerate}
+        \item $|X|=2$时，由下凸函数性质可证
+        \item 数学归纳法
+    \end{enumerate}
+    Assume $|X|=k-1$, Jensen's Inequality holds\\
+    Prove $|X|=k$, Inequality holds as well.\\
+    Assume $\sum_{i=1}^{k-1}p(x_i)=q=1-p(x_k)$
+    \begin{align}
+        Ef(X)&=p(x-k)f(x_k)+\sum_{i=1}^{k-1}p(x_i)f(x_i)\\
+        &=p(x_k)f(x_k)+q\sum_{i=1}^{k-1}\frac{p(x_i)}{q}f(x_i)\\
+        &=p(x_k)f(x_k)+(1-p(x_k))f(\sum_{i=1}^{k-1}\frac{p(x_i)}{1-p(x_k)}x_i)\\
+        &\ge f(p(x_k)x_k+\sum_{i=1}^{k-1}p(x_i)x_i)\\
+        &=f(EX)
+    \end{align}
+\end{document}
