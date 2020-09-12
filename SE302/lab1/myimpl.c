@@ -7,37 +7,60 @@
 
 int maxargs(A_stm stm);
 
-int maxargsExp(A_exp exp)
+int maxargsExp(A_exp exp, bool flag)
 {
+	if (flag)
+	{
+		if (exp->kind == A_idExp || exp->kind == A_numExp)
+			return 1;
+		else if (exp->kind == A_opExp)
+		{
+			int arg1 = maxargsExp(exp->u.op.right, flag);
+			int arg2 = maxargsExp(exp->u.op.left, flag);
+			if (arg1 > arg2)
+				return arg1;
+			else
+				return arg2;
+		}
+		else
+			return maxargs(exp->u.eseq.stm) + maxargsExp(exp->u.eseq.exp, flag);
+	}
 	if (exp->kind == A_idExp || exp->kind == A_numExp)
 		return 0;
 	else if (exp->kind == A_opExp)
-		return maxargsExp(exp->u.op.right) + maxargsExp(exp->u.op.left);
+		return maxargsExp(exp->u.op.right, flag) + maxargsExp(exp->u.op.left, flag);
 	else
-		return maxargs(exp->u.eseq.stm) + maxargsExp(exp->u.eseq.exp);
+		return maxargs(exp->u.eseq.stm) + maxargsExp(exp->u.eseq.exp, flag);
 }
 
-int maxargsExplist(A_expList expList)
+int maxargsExplist(A_expList expList, bool flag)
 {
 	if (expList->kind == A_lastExpList)
-		return maxargsExp(expList->u.last);
+		return maxargsExp(expList->u.last, flag);
 	else
-		return maxargsExp(expList->u.pair.head) + maxargsExplist(expList->u.pair.tail);
+		return maxargsExp(expList->u.pair.head, flag) + maxargsExplist(expList->u.pair.tail, flag);
 }
 
 int maxargs(A_stm stm)
 {
 	//TODO: put your code here.
-	switch (stm->kind)
+	if (stm->kind == A_compoundStm)
 	{
-	case A_compoundStm:
-		return maxargs(stm->u.compound.stm1) + maxargs(stm->u.compound.stm2);
-	case A_assignStm:
-		return maxargsExp(stm->u.assign.exp);
-	case A_printStm:
-		return 1 + maxargsExplist(stm->u.print.exps);
+		int arg1 = maxargs(stm->u.compound.stm1);
+		int arg2 = maxargs(stm->u.compound.stm2);
+		if (arg1 > arg2)
+			return arg1;
+		else
+			return arg2;
 	}
-	return 0;
+	else if (stm->kind == A_assignStm)
+	{
+		return maxargsExp(stm->u.assign.exp, FALSE);
+	}
+	else
+	{
+		return maxargsExplist(stm->u.print.exps, TRUE);
+	}
 }
 
 typedef struct table *Table_;
@@ -96,7 +119,7 @@ IntAndTable_ interpExpList(A_expList expList, Table_ t)
 	if (expList->kind == A_pairExpList)
 	{
 		IntAndTable_ it = interpExp(expList->u.pair.head, t);
-		printf("%d\n", it->i);
+		printf("%d ", it->i);
 		return interpExpList(expList->u.pair.tail, it->t);
 	}
 	else
@@ -162,42 +185,43 @@ void interp(A_stm stm)
 	interpStm(stm, NULL);
 }
 
-int main() {
-	int args;
-	int test_num = 1;
+// int main()
+// {
+// 	int args;
+// 	int test_num = 0;
 
-	switch(test_num)
-	{
-		case 0:
-			printf("prog\n");
-			args = maxargs(prog());
-			printf("args: %d\n",args);
-			interp(prog());
+// 	switch (test_num)
+// 	{
+// 	case 0:
+// 		printf("prog\n");
+// 		args = maxargs(prog());
+// 		printf("args: %d\n", args);
+// 		interp(prog());
 
-			printf("prog_prog\n");
-			args = maxargs(prog_prog());
-			printf("args: %d\n",args);
-			interp(prog_prog());
-			break;
-		case 1: 
-			printf("prog_prog\n");
-			args = maxargs(prog_prog());
-			printf("args: %d\n",args);
-			interp(prog_prog());
+// 		printf("prog_prog\n");
+// 		args = maxargs(prog_prog());
+// 		printf("args: %d\n", args);
+// 		interp(prog_prog());
+// 		break;
+// 	case 1:
+// 		printf("prog_prog\n");
+// 		args = maxargs(prog_prog());
+// 		printf("args: %d\n", args);
+// 		interp(prog_prog());
 
-			printf("prog\n");
-			args = maxargs(prog());
-			printf("args: %d\n",args);
-			interp(prog());
-			break;
-		default:
-			printf("unexpected case\n");
-			exit(-1);
-	}
-	printf("right_prog\n");
-	args = maxargs(right_prog());
-	printf("args: %d\n",args);
-	interp(right_prog());
+// 		printf("prog\n");
+// 		args = maxargs(prog());
+// 		printf("args: %d\n", args);
+// 		interp(prog());
+// 		break;
+// 	default:
+// 		printf("unexpected case\n");
+// 		exit(-1);
+// 	}
+// 	printf("right_prog\n");
+// 	args = maxargs(right_prog());
+// 	printf("args: %d\n", args);
+// 	interp(right_prog());
 
-	return 0;
-}
+// 	return 0;
+// }
