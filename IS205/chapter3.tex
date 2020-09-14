@@ -1,0 +1,21 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\title{Chapter 3: 信道与信道容量}
+\author{Xuan}
+\begin{document}
+    \maketitle
+    \section{信道的基本概念}
+    \subsection{二进制离散信道(BSC)}
+    该信道模型的输入和输出信号的符号数都是2，即$X\in A={0，1}$和$Y\in B={0, 1}$，转移概率为
+    \begin{equation}
+        \begin{aligned}
+            p(Y=0|X=1)&=p(Y=1|X=0)=p\\
+            p(Y=1|X=1)&=p(Y=0|X=0)=1-p
+        \end{aligned}
+    \end{equation}
+    \subsection{加性高斯白噪声信道(AWGN)}
+    \[Y=X+G\]
+    G是一个零均值、方差为$\sigma^2$的高斯随机变量，当$X=a_i$给定后，Y是一个均值为$a_i$、方差为$\sigma^2$的高斯随机变量
+    \[p_Y(y|a_i)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(y-a_i)^2/2\sigma^2}\]
+\end{document}

@@ -1,7 +1,6 @@
 *.log
 *.gz
 *.aux
-*.tex
 *.o
 *.exe
 *.out

@@ -1,0 +1,96 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\title{Chapter 2}
+\author{Xuan}
+\begin{document}
+    \maketitle
+    \section{条件互信息}
+    在有三个变量的情况下，符号$x_i$与符号对$(y_j,z_k)$之间的互信息量定义为
+    \[I(x_i;y_j,z_k)=log\frac{p(x_i|y_j,z_k)}{p(x_i)}\]
+    条件互信息量是在给定$z_k$条件下，$x_i$与$y_j$之间的互信息量，定义为
+    \[I(x_i;y_j|z_k)=log\frac{p(x_i|y_j,z_k)}{p(x_i|z_k}\]
+    结合上述公式可写为
+    \[I(x_i;y_j,z_k)=I(x_i;z_k)+I(x_i;y_j|z_k)\]
+    \subsection{相关公式推导}
+    \begin{equation}
+    \begin{split}
+        I(X;Y|Z)&=\sum p(x,y,z)log\frac{p(x,y|z)}{p(x|z)p(y|z)}\\
+        &=\sum_zD(p(x,y|z)||p(x|z)p(y|z))*p(z)
+    \end{split}
+    \end{equation}
+    \begin{equation}
+    \begin{split}
+        \frac{p(x,y|z)}{p(x|z)p(y|z)}&=\frac{p(x|y,z)p(y|z)p(x)}{p(x)p(x|z)p(y|z)}\\
+        &=\frac{p(x,y,z)}{p(x)p(y,z)}*\frac{p(x)}{p(x|z)}
+    \end{split}
+    \end{equation}
+    将(2)带入(1)
+    \begin{equation}
+        \begin{split}
+            (1)&=\sum p(x,y,z)log\frac{p(x,y,z)}{p(x)p(y,z)}-\sum p(x,y,z)log \frac{p(x|z)p(z)}{p(x)p(z)}
+        \end{split}
+    \end{equation}
+    \begin{equation}
+        \begin{split}
+            \sum p(x,y,z)log\frac{p(x|z)p(z)}{p(x)p(z)}&=\sum_{x,y,z}(p(x,z)log\frac{p(x,z)}{p(x)p(z)})p(y|x,z)\\
+            &=\sum_{x,z}\sum_y\\
+            &=\sum_{x,z}p(x,z)log\frac{p(x,z)}{p(x)p(z)}\sum_yp(y|x,z)
+        \end{split}
+    \end{equation}
+    将(4)带入(3)
+    \begin{equation}
+        \begin{split}
+            (3)&=\sum p(x,y,z)log\frac{p(x,y,z)}{p(x)p(y,z)}-\sum p(x,z)log\frac{p(x,z)}{p(x)p(z)}\\
+            &=I(X;Y,Z)-I(X;Z)\\
+            &=H(X)-H(X|Y,Z)-(H(X)-H(X|Z))\\
+            &=H(X|Z)-H(X|Y,Z)
+        \end{split}
+    \end{equation}
+    \section{信息不增性}
+    对于马尔可夫链$X -> Y -> Z$，有
+    \[I(X;Z)\le I(Y;Z)\]
+    \subsection{公式证明}
+    \begin{equation}
+        \left.\begin{aligned}
+            I(X;Y,Z)&=I(X;Y)+I(X;Z|Y)\\
+            I(X;Z|Y)&=\sum_yD(p(x,z|y)||p(x|y)p(z|y))p(y)=0
+        \end{aligned}
+        \right\}
+        I(X;Y,Z)=I(X;Y)
+    \end{equation}
+    \begin{equation}
+        \begin{aligned}
+            I(X;Y,Z)=I(X;Z)+I(X;Y|Z)\\
+            p(x,y,z)=p(y)p(x|y)p(z|y)\iff p(x,z|y)=p(x|y)p(z|y)
+        \end{aligned}
+    \end{equation}
+    综上所述，$I(X;Y)=I(X;Y,Z)\ge I(X;Z)$
+    \subsection{文氏图证明}
+    见chapter2.jpg
+    \section{连续信源的熵和互信息}
+    \subsection{连续信源熵}
+    \[H_c(x)=-\int_{-\infty}^{\infty}p_x(x)logp_x(x)dx\ge 0\]
+    \subsection{能量确定条件下，$\int_{-infty}^{\infty}x^2p(x)dx$在高斯分布情况下最大化熵率}
+    \begin{equation}
+        \begin{aligned}
+            H_c(x)&=-\int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-m)^2}{2\sigma^2}}log[\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-m)^2}{2\sigma^2}}]dx
+        \end{aligned}
+    \end{equation}
+    \subsection{范围确定条件下，均匀分布最大化熵率}
+    变量X的幅度取值限定在[a,b]，则有$\int_{a}^{b}p_x(x)dx=1$，当任意$p_x(x)$符合平均分条件，
+    \[
+        p_x(x)=
+            \begin{cases}
+                \frac{1}{b-a},&a\le x \le b\\
+                0, &other
+            \end{cases}
+        \]
+    时，信源达到最大熵
+    \begin{equation}
+        \begin{aligned}
+            H_c(x)&=-\int_{a}^{b}\frac{1}{b-a}log\frac{1}{b-a}dx\\
+            &=log(b-a)
+        \end{aligned}
+    \end{equation}
+\end{document}
