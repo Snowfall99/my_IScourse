@@ -1,6 +1,9 @@
 \documentclass[a4paper, 12pt]{article}
 \usepackage{ctex}
 \usepackage{amsmath}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{mathrsfs}
+
 \title{Chapter 3: 信道与信道容量}
 \author{Xuan}
 \begin{document}
@@ -18,4 +21,61 @@
     \[Y=X+G\]
     G是一个零均值、方差为$\sigma^2$的高斯随机变量，当$X=a_i$给定后，Y是一个均值为$a_i$、方差为$\sigma^2$的高斯随机变量
     \[p_Y(y|a_i)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(y-a_i)^2/2\sigma^2}\]
+    \section{信道}
+    信道可以看成是转移概率
+
+    对于信息$M\in\mathcal{M}$，传输速率$R=\frac{log(\mathcal{M})}{n}$，信道传输的过程即可表示为：
+    \[M\rightarrow x^n(M)\xrightarrow{p(y|x)}y^n \rightarrow \hat{M}\]
+    
+    \begin{enumerate}
+        \item 设计一个方案，该方案可以达到某传输概率
+        \item 证明超出该传输速率无法传输 $\iff$ 能够传输的都不超过这个速率
+    \end{enumerate}
+    \subsection{1.设计方案}
+    \subsubsection{典型序列}
+    Define: $x^n$ is (n, $\varepsilon$) typical, when $|N(x|x^n)-p(x)|<\varepsilon n$, for all
+    $x\in \mathcal{X}$, where $N(x|x^n)$ is the empirical distribution.
+
+    $Pr(x^n is typical)\rightarrow 1$, when n $\rightarrow \infty$, which can be proved by Law of Large Numbers
+    \subsection{典型集}
+    Set $T(n, \varepsilon)$ 为典型序列的集合
+
+    \begin{enumerate}
+        \item $Pr(x^n \in T(n, \varepsilon))\rightarrow 1$
+        \item $|T(n,\varepsilon)|\approx2^{nH(x)}$
+        \subitem 2.1 $x^n\in T(\varepsilon, n), p(X^n=x^n)\approx 2^{-nH(x)}$
+    \end{enumerate}
+    \subsubsection{Proof}
+    \[
+        p(x^n)=\prod_{i=1}^{n}p(x_i)=\prod_{x\in \mathcal{X}}p(x)^{N(x|x^n)n} (*)
+    \]
+    $\Rightarrow$所有典型序列的概率都差不多大
+    \[
+        log(*)=\sum_{x\in \mathcal{X}}nN(x|x^n)logp(x)\approx n\sum_{x\in \mathcal{X}}p(x)logp(x)=-nH(x)
+    \]
+    Pr($x^n$: $x^n$ is typical) = * $\approx 2^{-nH(x)}$
+
+    \subsection{典型集和散度的关系}
+    $Pr(x^n\in T(n, \varepsilon))=?$
+    
+    $x^n\in T(n, \varepsilon), N(x|x^n)~p(x)$
+
+    \begin{equation}
+        \begin{aligned}
+            Pr(x^n)&=\prod q(x)^{nN(x|x^n)}\\
+            &\approx \prod q(x)^{np(x)}\\
+            &=2^{log\prod q(x)^{np(x)}}\\
+            &=2^{np(x)\sum logq(x)}\\
+            &=2^{-np(x)log\frac{1}{q(x)}}
+        \end{aligned}
+    \end{equation}
+    \begin{equation}
+        \begin{aligned}
+            Pr(T(n, \varepsilon)) &= \sum_{x^n \in T(\varepsilon, n)}Pr(x^n)\\
+            &\approx 2^{-np(x)log p(x)}*2^{-np(x)log \frac{1}{q(x)}}\\
+            &=2^{-nD(p||q)}
+        \end{aligned}
+    \end{equation}
+    \subsection{条件典型集}
+    典型条件集的大小：$2^{nH(Y|X)}$    
 \end{document}
