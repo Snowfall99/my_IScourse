@@ -78,4 +78,90 @@
     \end{equation}
     \subsection{条件典型集}
     典型条件集的大小：$2^{nH(Y|X)}$    
+    \section{随机码簿(Random Codebook)}
+    $X-Y,p(y|x)$，n长编码，$|M|\approx 2^{nI(X;Y)}$
+
+    具体步骤如下：
+    \begin{enumerate}
+        \item 生成码簿：给定一个概率$p(x)$，按$p(x)，i.i.d.$生成$x^n(i)$序列，重复$2^{nI(X;Y)}$次
+        \item 发送$x^n(M)$
+        \item 解码：$y^n$查表寻找$(x^n(i),y^n)$联合典型
+        \item 错误率分析：
+        \begin{enumerate}
+            \item 错误一：发送$x^n$，但收到的$y^n$和$x^n$不联合典型
+            \item 错误二：发送$x^n$，收到$y^n$，但存在$(x^n)'$与$y^n$联合典型
+        \end{enumerate} 
+    \end{enumerate}
+    \[p(mistake1 \cup mistake2) \le p(mistake1) + p(mistake2)\]
+    \begin{enumerate}
+        \item $p(mistake1)\rightarrow 0$, when $n \rightarrow \infty$(由大数定律可知)
+        \item $p(mistake2)\rightarrow 0$, when $|M|\le 2^{nI(X;Y)}$
+    \end{enumerate}
+    \begin{equation}
+        \begin{aligned}
+            p(mistake2) &\le \sum_{x^n\neq (x^n)'}p((x^n)', y^n)\\
+            &=2^{n[I(X;Y)-\varepsilon]}-2^{-nI(X;Y)}
+        \end{aligned}
+    \end{equation}
+    \section{Converse theory of channel capacity}
+    假设$|M|$等概率发生
+    \begin{equation}
+        \begin{aligned}
+            R&=\frac{log|M|}{n}\\
+            nR&=log|M|=H(M)\\
+            &=H(M|Y^n)+I(M;Y^n)
+        \end{aligned}
+    \end{equation}
+    其中
+    \begin{equation}
+        \begin{aligned}
+            I(M;Y^n)&=I(X^n;Y^n)\\
+            &=H(Y^n)-H(Y^n|X^n)\\
+            &\le \sum_{i=0}^{n}H(y_i)-H(Y^n|X^n)\\
+            &=\sum H(y_i) - \sum H(y_i|X^n, y_1,...,y_n)(Chain Rule)\\
+            &=\sum H(y_i)- \sum H(y_i|x_i)\\
+            &=\sum I(x_i;y_i)\\
+            &\le nmax_{p(x_i)}I(X;Y)
+        \end{aligned}
+    \end{equation}
+    \subsection{Fano's Inequality}
+    For Markov Chain, $X\rightarrow Y \rightarrow \hat{X}$
+    \[
+        H(X|\hat{X})\le H(Pe) + log(|X|-1) \le 1 + log(|H|-1)    
+    \]
+    where $Pe$ is the probability of making errors, $H(Pe)$ obey 0-1 distribution, 
+    such that $H(Pe) \le 1$
+    \subsubsection{Proof of Fano's Inequality}
+    Import Indicator Variable E, where has the property:
+    \[
+        E=\left\{
+            \begin{array}{rcl}
+                0,X=\hat{X}\\
+                1,X\neq\hat{X}
+            \end{array}
+            \right.
+    \]
+    such that $H(E|X,\hat{X}) = 0$
+    \begin{equation}
+        \begin{aligned}
+            H(X|\hat{X})&=H(X|\hat{X}) + H(E|X,\hat{X})\\
+            &=H(E,X|\hat{X})\\
+            &=H(X|E, \hat{X})+H(E|\hat{X})\\
+            &=(Pe)H(X|E=1,\hat{X}) + (1-Pe)H(X|E=0,\hat{X}) + H(E|\hat{X})\\
+            &\le (Pe)log(|X|-1) + H(Pe)
+        \end{aligned}
+    \end{equation}
+    \[
+        H(X|E=0,\hat{X}) = 0    
+    \]
+    \subsection{$R\le maxI(X;Y)$}
+    From equation (5), together with equation (6) and (7), we can get
+    \begin{equation}
+        \begin{aligned}
+            H(M|Y^n) + I(M;Y^n) &\le (Pe)log(|M|) + nmaxI(X;Y)\\
+            (1-Pe)R &\le maxI(X;Y)\\
+        \end{aligned}
+    \end{equation}
+    Because $Pe \rightarrow 0$, so that we can conclude that $R\le max_{p(x_i)}I(X;Y)$
+
 \end{document}

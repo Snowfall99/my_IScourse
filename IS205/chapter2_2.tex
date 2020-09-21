@@ -77,6 +77,7 @@
             H_c(x)&=-\int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-m)^2}{2\sigma^2}}log[\frac{1}{\sqrt{2\pi\sigma^2}}e^{\frac{-(x-m)^2}{2\sigma^2}}]dx
         \end{aligned}
     \end{equation}
+    证明过程见homework1
     \subsection{范围确定条件下，均匀分布最大化熵率}
     变量X的幅度取值限定在[a,b]，则有$\int_{a}^{b}p_x(x)dx=1$，当任意$p_x(x)$符合平均分条件，
     \[
@@ -93,4 +94,34 @@
             &=log(b-a)
         \end{aligned}
     \end{equation}
+    \section{熵的一部分性质}
+    \subsection{香农辅助定理}
+    对任意的n维概率矢量$P=(p_1,p_2,...,p_n)$和$Q=(q_1,q_2,...,q_n)$，如下不等式成立
+    \[
+        H(p_1,p_2,...,p_n = -\sum_{i=1}^{n}p_ilogp_i)\le -\sum_{i=1}^{n}p_ilogq_i    
+    \]
+    该式表明，用不等的概率分布来编码会使熵增
+    \subsection{条件熵小于无条件熵}
+    条件熵小于信源熵：$H(Y|X)\le H(Y)$。当且仅当y和x相互独立时，$p(y|x)=p(y)$，取等号。
+
+    两个条件下的信源熵小于一个条件下的信源熵，即$H(Z|x,y)\le H(Z|Y)$，当且仅当$p(z|x,y)=p(z|y)$时取等号。
+
+    联合熵小于信源熵之和：$H(X,Y)\le H(X) + H(Y)$。当且仅当两个集合相互独立时取等号。
+
+    \section{离散有记忆信源的序列熵}
+    对于由两个符号组成的联合信源，有下列结论：  
+    \begin{enumerate}
+        \item $H(X_1, X_2) = H(X_1) + H(X_2|X_1) = H(X_2) + H(X_1|X_2)$(Chain Rule)
+        \item $H(X_1)\ge H(X_1|X_2), H(X_2)\ge H(X_2|X_1)$
+    \end{enumerate}
+    考虑离散平稳信源，有下列结论成立：
+    \begin{enumerate}
+        \item $H(X_L/X^{L-1})$是L的单调非增函数
+        \item $H_L(X)\ge H(X_L|X^{L-1})$($H_L(X)$为平均符号熵)
+        \item $H_L(X)$是L的单调非增序列
+        \item 当$L\rightarrow \infty$时，有$H_{\infty}(X) := lim_{L\rightarrow \infty}H_L(X)=lim_{L\rightarrow\infty}H(X_L|X_1,X_2,...,X_{L-1})$，其中，$H_{\infty}(X)$称为极限熵，又称为极限信息量
+    \end{enumerate}
+    对于齐次，遍历的马尔可夫链，其状态$s_i$由$(x_{i_1},...,x_{i_m})$唯一确定，因此有
+    $p(x_{i_{m+1}}|x_{i_m},...,x_{i_1})=p(x_{i_{m+1}}|s_i)$，可以得到在这种情况下的极限熵为
+    $H_{\infty}(x)=\sum_ip(s_i)H(X|s_i)$，其中$p(s_i)$是马尔可夫链的稳态分布。
 \end{document}
