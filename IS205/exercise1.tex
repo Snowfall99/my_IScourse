@@ -1,0 +1,55 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{ctex}
+\usepackage{amsmath}
+\title{Exercises}
+\author{Xuan}
+\begin{document}
+    \maketitle
+    \section{散度 Divergence}
+    \paragraph{Problem 1}用另外一种方式证明$D(p||q)\ge 0$
+    \begin{equation}
+        \begin{aligned}
+            -D(p||q)&=\sum p(x)ln\frac{q(x)}{p(x)}\\
+            &\le \sum p(x)(\frac{q(x)}{p(x)}-1)\\
+            &=\sum (q(x)-p(x))\\
+            &=1-1\\
+            &=0
+        \end{aligned}
+    \end{equation}
+    hint:$lnx\le x-1$
+    \paragraph{Problem 2}混淆增加熵率
+
+    证明：$\vec(p)=(p_1,p_2,...,p_m)$，$\vec{q}=(p_1,p_2,...,\frac{p_i+p_j}{2},...,\frac{p_j+p_i}{2},...,p_m)$，
+    有$\H(\vec{q})\ge H(\vec{p})$
+    \begin{equation}
+        \begin{aligned}
+            H(\vec{q})-H(\vec{p})&=-2*\frac{p_i+p_j}{2}log\frac{p_i+p_j}{2}+p_ilogp_i+p_jlogp_j\\
+            &=-p(log\frac{p_i+p_j}{2}-\frac{p_i}{p}logp_i-\frac{p_j}{p}logp_j)(p=p_i+p_j)\\
+            &=-p(log\frac{p_i+p_j}{2}-logp-(\frac{p_i}{p}log\frac{p_i}{p})-(\frac{p_j}{p}log\frac{p_j}{p}))\\
+            &=-p(log\frac{p_i+p_j}{2}-logp+p_1log\frac{1}{p_1}+p_2log\frac{1}{p_2})\\
+            &\ge -p(log\frac{p}{2}-logp+log(p_1*\frac{1}{p_1}+p_2*\frac{1}{p_2}))\\
+            &=0
+        \end{aligned}
+    \end{equation}
+    hint:Jensen's Inequality:$\lambda f(x_1)+(1-\lambda)f(x_2)\le f(\lambda x_1+(1-\lambda)x_2)$, for concave function
+    \section{互信息}
+    \paragraph{Problem 3} 设X,Y,Z,T，满足$H(T|X)=H(T),H(T|X,Y)=0,H(T|Y)=H(T),H(Y|Z)=0,H(T|Z)=0$，
+    
+    证明：(1)$H(T|X,Y,Z)=I(Z,T|X,Y)=0$
+    \[H(T|X,Y,Z)=H(T|X,Y)-I(T;Z|X,Y)\ge 0\]
+    Because $H(T|X,Y)=0$, we can come to the fact that $I(T;Z|X;Y)=0$, as a consequence we can conclude that $H(T|X,Y,Z)=0$
+
+    (2)$I(X;T|Y,Z)=I(Y;T|X,Z)=0$
+    \[I(X;T|Y,Z)=H(T|Y,Z)-H(T|X,Y,Z)\]
+    From (1), we have the fact that $H(T|X,Y,Z)=0$. Moreover, we have the fact that 
+    $H(T|Z)=0=I(T;Y|Z)+H(T|Y,Z)$ and $I(T;Y|Z) \ge 0$, such that $H(T|Y,Z)=0$. As a consequence,
+    we can conclude that $I(X;T|Y,Z)=0$. We can draw thE conclusion that $I(Y;T|X,Z)=0$ with 
+    the same method.
+
+    (3)$I(X;Y|Z,T)=0$
+    \[I(X;Y|Z,T)=H(Y|Z,T)-H(Y,X|Z,T)\]
+    Because $H(Y|Z)=0$, we can easily have $H(Y|Z,T)=0$. Meanwhile, $I(X;Y|Z,T)\ge 0$,
+    such that $H(Y|X,Z,T)$ can only be 0. As a consequence, we can conclude that $I(X;Y|Z,T)=0$
+
+    (4)$I(X;Z)\ge H(T)$
+\end{document}
