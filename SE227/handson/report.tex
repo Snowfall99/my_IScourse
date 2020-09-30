@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    numbers=left, 
+    numberstyle= \tiny, 
+    keywordstyle= \color{ blue!70},
+    commentstyle= \color{red!50!green!50!blue!50}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
+\title{WAL Report}
+\author{Xuan}
+\date{September 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Using wal-sys}
+\paragraph{Question 1} Wal-sys displays the current state of the database contents after you type show$\_$state. Why doesn't the database show studentB?
+
+From the command related to studentB,
+\lstset{language=C}
+\begin{lstlisting}
+begin 2
+create_account 2 studentB 2000
+\end{lstlisting}
+we can see that there is no 'commit' command, which means the changes for studentB cannot be record in the database. Meanwhile, action 2 is not end, so it cannot be stored in the database for now.
+\paragraph{Question 2} When the database recovers, which accounts should be active, and what values should they contain?
+
+studentA, contains 900 and studentC contains 3100.
+\paragraph{Question 3} Can you explain why the "DB" file does not contain a record for studentC and contains the pre-debit balance for studentA?
+
+Because it crashes before update DB, but the LOG file has record the update.
+
+\section{Recovering the database}
+\paragraph{Question 4} What do you expect the state of "DB" to be after wal-sys recovers? Why?
+
+studentA, contains 900 and studentC contains 3100.
+\paragraph{Question 5} Run wal-sys again to recover the database. Examine the "DB" file. Does the state of the database match your expectations? Why or why not?
+
+\paragraph{Question 6} During recovery, wal-sys reports the action$\_$ids of those recoverable actions that are "Losers", "Winners", and "Done". What is the meaning of these categories?
+
+"Losers" means commands related to this action didn't commit before crash, which cannot be recovered after crash. "Winners" means despite this action did not end before crash, but it had been committed, as a result, it can be recover after crash. "Done" means this action had already been committed and end, which is definitely stored in the DB.
+
+\paragraph{Question 7} Why are the results of recoverable action 2's create$\_$account 2 studentB 2000 command not installed in "DB" by the checkpoint command on the following line?
+
+Because action 2 did not commit or end before checkpoint.
+\paragraph{Question 8} How many lines were rolled back? What is the advantage of using checkpoints?
+
+6 lines. Save place in log, discard all undecided records before checkpoint.
+\paragraph{Question 9} Does the second run of the recovery procedure (for sequence 2) restore "DB" to the same state as the first run? What is this property called?
+
+No, record for studentC is added into DB.
+\paragraph{Question 10} Compare the action$\_$ids of "Winners", "Losers", and "Done" from the second recovery with those from the first. The lists are different. How does the recovery procedure guarantee the property from Question 9 even though the recovery procedure can change? (Hint: Examine the "LOG" file).
+
+The recovery procedure automatically ends the committed actions, this truncates the log and as a result save place for log.
+\paragraph{Question 11(Optional)} Wal-sys has a hitherto unmentioned option: if you type wal-sys -undo it will perform undo logging and undo recovery. Try the above sequences again with undo logging to see what changes.
+
+Log for loser action is aborted.
+\end{document}
