@@ -52,4 +52,52 @@
     such that $H(Y|X,Z,T)$ can only be 0. As a consequence, we can conclude that $I(X;Y|Z,T)=0$
 
     (4)$I(X;Z)\ge H(T)$
+    \section{信道容量}
+    \paragraph{Problem 4} Binary Erasure Channel(二进制擦拭信道)，问：找到$p(x)$，使得$C=Imax(X;Y)$, 图见exe1\_4
+
+    \begin{equation}
+        \begin{aligned}
+            I(X;Y)&=H(X)-H(X|Y)=H(Y)-H(Y|X)\\
+            p(y)&=\sum_x p(x,y)=\sum_x p(y|x)p(x)\\
+            H(Y)&=-\sum_y p(y)logp(y)\\
+            &=-\sum_y(\sum_xp(y|x)p(x))log(\sum_xp(y|x)p(x))
+        \end{aligned}
+    \end{equation}
+    \begin{equation}
+        \begin{aligned}
+            p(Y=0)&=p_0(1-p-\epsilon)+(1-p_0)p=p_0(1-29-\epsilon)+p\\
+            p(Y=1)&=p_0p+(1-p_0)(i-p-\epsilon)=(1-p-\epsilon)+(2p+\epsilon-1)p_0\\
+            p(Y=\epsilon)=p_0\epsilon+(1-p_0)\epsilon=\epsilon
+        \end{aligned}
+    \end{equation}
+    From equation(4) above, we can get that $p(Y=0)+p(Y=1)=1-\epsilon$. Apparently,
+    H(Y) reaches its maximum when $p_0=\frac{1}{2}$.
+    \[
+        H(Y|X)=\sum p(x)H(Y|X=x)=p(0)H(Y|X=0)+p(1)H(Y|X=1)    
+    \]
+    From the transition matrix, we can get that $H(Y|X=0)=H(Y|X=1)$. So that, we 
+    have $H(Y|X)=H(Y|X=0)=H(Y|X=1)$, which is only related to $\epsilon$ and p,
+    so $I(X;Y)$ reaches its maximum, when $H(Y)$ reaches its maximum, which has nothing
+    to do with $H(Y|X)$.
+
+    \paragraph{Problem 5} (转移概率矩阵和及串联信道)问X$\rightarrow$Y信道的转移概率，图见exe1\_5
+
+    method 1:
+    \begin{equation}
+        \begin{aligned}
+            p(x=0,y=0)&=p(x=0)p(y=0|y=0)\\
+            &=p(x=0)(p(y=0,z=0|x=0)+p(y=0,z=1|x=0))\\
+            &=p(x=0)(p(y=0|z=0)p(z=0|x=0)+p(y=0|z=1)p(z=1|x=0))
+        \end{aligned}
+    \end{equation}
+    So we can get,
+    \begin{equation}
+        \begin{aligned}
+            p(y=0|x=0)&=(1-p_2)(1-p_1)+p_1p_2\\
+            p(y=1|x=0)&=(1-p_1)p_2+(1-p_2)p_1\\
+            p(y=0|x=1)&=p_1(1-p_2)+(1-p_1)p_2\\
+            p(y=1|x=1)&=(1-p_1)(1-p_2)+p_1p_2
+        \end{aligned}
+    \end{equation}
+    method 2: 见图片
 \end{document}

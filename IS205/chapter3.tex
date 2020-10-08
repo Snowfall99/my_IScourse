@@ -163,5 +163,32 @@
         \end{aligned}
     \end{equation}
     Because $Pe \rightarrow 0$, so that we can conclude that $R\le max_{p(x_i)}I(X;Y)$
-
+    \section{Extension: 一阶马尔可夫链的概率}
+    $X_1-X_2-...-X_n$, 
+    \[
+        P_{x_n}|P_{x_1}=P_{x_n}|P_{x_{n-1}}...P_{x_2}|P_{x_1}=(P_{x_{i+1}}|P_{x_{i}})^{n-1}  
+    \]
+    稳态：转移矩阵的特征向量
+    \section{微分熵的性质}
+    \begin{enumerate}
+        \item $h(x)=h(x+C)$，C是常数
+        \item $h(aX)=h(X)+log|a|$
+        \begin{enumerate}
+            \item $h(A\vec{x})=h(\vec{x})+log|A|$
+        \end{enumerate}
+    \end{enumerate}
+    \subsection{性质2的证明}
+    令$Y=aX$，则有$dy=adX$，故$P(Y\le y)=P(X\le \frac{y}{a})$
+    \[
+        P_Y(y)=\frac{dP(Y\le y)}{dy}=\frac{dP(X\le \frac{y}{a})}{d\frac{y}{a}}*\frac{1}{a}=f_x(\frac{y}{a})*\frac{1}{a}    
+    \]
+    \begin{equation}
+        \begin{aligned}
+            -\int p(y)logp(y)dy&=-\int \frac{1}{a}f_x(\frac{y}{a})log\frac{1}{a}f_x(\frac{y}{a})dy\\
+            &=-\int f_x(\frac{y}{a})log\frac{1}{a}f_x(\frac{y}{a})d\frac{y}{a}\\
+            &=-\int f_x(x)log\frac{1}{a}f_x(x)dx\\
+            &=-\int f_x(x)log f_x(x)dx-\int f_x(x)log\frac{1}{a}dx\\
+            &=-\int f_x(x)log f_x(x)dx-log|a|
+        \end{aligned}
+    \end{equation}
 \end{document}
