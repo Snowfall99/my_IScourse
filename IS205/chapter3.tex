@@ -191,4 +191,50 @@
             &=-\int f_x(x)log f_x(x)dx-log|a|
         \end{aligned}
     \end{equation}
+    \section{连续信道}
+    \paragraph{Example}
+    对于$X \sim N(0, \sigma^2)$，有$h(x) = \frac{1}{2}log(2 \pi e \sigma^2)$.  
+    \newline 则对于$aX \sim N(0, a^2 \sigma^2)$，有$h(ax) = \frac{1}{2}log(2 \pi e a^2 \sigma^2) = \frac{1}{2}log(2\pi e \sigma^2)+\frac{1}{2}log a^2 = \frac{1}{2}log(2\pi e \sigma^2) + loga$
+    \subsection{加性噪声信道(Additative Noise Channel)}
+    x与z相互独立
+    \newline $p(y) = p(x+z)$
+    \newline $P(Y \le y) = P(X+Z \le y) = \int_{X+Z \le y}p(x,z)dxdz = \int_{X+Z \le y}p(x)p(z)dxdz$
+    \begin{enumerate}
+        \item 对任何X,Z是高斯分布时，最小化信道容量$I(X;Y)$，因为该情况下混乱程度最大（Proof: Entropy Power Inequality）
+        \item 在方差一定的情况下，如果Z是高斯分布，则X也是高斯分布时，最大化信道容量
+    \end{enumerate}
+    \subsubsection{证明第二条}
+    \begin{equation}
+        \begin{aligned}
+            I(Y;X) &= I(X+Z; X) = H(x+z) - H(x+z|x)\\
+            &=H(x+z)-H(z)
+        \end{aligned}
+    \end{equation}
+    $D(x), Var(x)$为给定值的情况下，$Var(x+z)=Var(x)+Var(z)$为定值
+    \newline 因为当X+Z为高斯分布时，H(X+Z)取到最大值，由于Z为高斯分布，故X也服从高斯分布
+
+    \subsection{信道容量不等式}
+    $X \sim N(0, P), Z \sim N(0, N)$
+    \begin{equation}
+        \begin{aligned}
+            C &= I(X; Y) = h(x+z) - h(z)\\
+            &= \frac{1}{2}log(2 \pi e (P+N)) - \frac{1}{2}log(2 \pi eN)\\
+            &= \frac{1}{2}(\frac{2\pi e(P+N)}{2\pi eN})\\
+            &= \frac{1}{2}log(\frac{P+N}{N})\\
+            &= \frac{1}{2}log(1+\frac{P}{N})
+        \end{aligned}
+    \end{equation}
+    信噪比SNR：$\frac{P}{N}$
+    \subsection{注水法(Water-Filling)}
+    $x_1,...,x_N$相互独立，$Var(z_i)=N_i$，$\sum Var(X_i)=P_s$，问$max\sum_{i=1}^nI(X_i;Y_i)$
+    \newline $\frac{1}{2}log(1+\frac{P_i}{N_i})\Leftrightarrow max\sum_{i=1}^n\frac{1}{2}log(1+\frac{P_i}{N_i}), s.t. P_1+...+P_N=P_s$
+    \newline $L(\vec{P})=\sum_{i=1}^n\frac{1}{2}log(1+\frac{P_i}{N_i})-\lambda(\sum_{i=1}^nP_i-P_s)$
+    \begin{equation}
+        \begin{aligned}
+            \frac{\partial L}{\partial P_i}&=\frac{\partial \sum_{i=1}^n\frac{1}{2}log(1+\frac{P_i}{N_i})-\lambda(\sum_{i=1}^nP_i-P_s)}{\partial P_i}\\
+            &=\frac{1}{2}\frac{1}{P_i+N_i}-\lambda
+            &=0
+        \end{aligned}
+    \end{equation}
+    As a result, $P_i+N_i=\frac{1}{2\lambda}$, so that $\sum P_I+N_i = \frac{n}{2 \lambda}$
 \end{document}
