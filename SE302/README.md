@@ -4,5 +4,4 @@
 - [x] lab 1: Straight-line Program Interpreter
 - [x] lab 2: Lexical Analysis
 
-Issues:
-- [ ] Actions on stirngs like "\"aaaa" can be optimised.
+# Notice: this repo is moved to [[here]](https://github.com/Snowfall99/tiger)
