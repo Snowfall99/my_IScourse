@@ -10,3 +10,4 @@ Some notes and projects for SJTU IS courses.
 - [SE302-编译原理与技术(2020 Fall)](https://github.com/czx99/my_IScourse/tree/master/SE302)
 - [IS301-计算机通信网络(2020 Fall)](https://github.com/czx99/my_IScourse/tree/master/IS301)
 - [SE227-计算机系统工程(2020 Fall)](https://github.com/czx99/my_IScourse/tree/master/SE227)
+- [IS208-数字系统设计(2020 Fall)](https://github.com/Snowfall99/my_IScourse/tree/master/IS208)
