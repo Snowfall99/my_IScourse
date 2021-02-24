@@ -126,4 +126,63 @@
         sudo make
     \end{lstlisting}
 
+    This will take a long time to make, try use the following instruction to make more threads to speed up.
+
+    \begin{lstlisting}
+        sudo make -j 2
+    \end{lstlisting}
+
+    This period takes about three hours, which is finally displayed as follows (Fig. \ref{fig4}).
+
+    \begin{figure}[htbp]
+        \centering
+        % Requires \usepackage{graphicx}
+        \includegraphics[width=7in]{./pic/exe1/pic4.jpg}\\
+        \caption{Final result for make command}\label{fig4}
+    \end{figure}
+
+    \subsection{Installation}
+
+    After compilation, we can use the following instruciton to install modules.
+
+    \begin{lstlisting}
+        sudo make modules_install
+    \end{lstlisting}
+
+    Then, we can use the following instruction to install the new Kernel.
+
+    \begin{lstlisting}
+        sudo make install
+    \end{lstlisting}
+
+    The result for installation is displayed as follows (Fig. \ref{fig5}).
+
+    \begin{figure}[htbp]
+        \centering
+        % Requires \usepackage{graphicx}
+        \includegraphics[width=7in]{./pic/exe1/pic5.jpg}\\
+        \caption{Final result for installation}\label{fig5}
+    \end{figure}
+
+    \subsection{Reboot}
+
+    Finally, we can use the following to restart and reboot the kernel.
+
+    \begin{lstlisting}
+        reboot
+    \end{lstlisting}
+
+    Moreover, we can use the following instruction again to view the version of kernel (Fig. \ref{fig6}). 
+
+    \begin{lstlisting}
+        uname -a
+    \end{lstlisting}
+
+    \begin{figure}[htbp]
+        \centering
+        % Requires \usepackage{graphicx}
+        \includegraphics[width=7in]{./pic/exe1/pic6.jpg}\\
+        \caption{The new Linux Kernel version}\label{fig6}
+    \end{figure}
+
 \end{document}
